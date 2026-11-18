@@ -1,6 +1,11 @@
-> **ain-soph/mlx-audio `serving` branch** — mlx-audio v0.6.6 plus one change for serving SOV-Transcribe-1 on an
-> M5 Ultra: the decode loop queues the next step (`mx.async_eval`) before reading the current token on the host, as
-> mlx-lm does. Same tokens (LibriSpeech test-clean, 100 files identical); 8-bit decode 105 -> 116 tok/s.
+> **ain-soph fork (`serving` branch, based on upstream v0.6.6).** What differs from upstream:
+>
+> | Change | Why | Enable / default | Effect (M5 Ultra) |
+> |---|---|---|---|
+> | SOV-Transcribe-1 decode queues the next step before reading the current token | every token waited for a host sync | always | 8-bit decode 105 → 116 tok/s; 100/100 transcripts identical |
+> | No upper version bounds on runtime dependencies | one shared environment with other engines | — | — |
+>
+> Full numbers: [Speech to text in ain-soph/llm-serving](https://github.com/ain-soph/llm-serving/blob/main/docs/performance.md#语音转写). Upstream PRs: [#1206](https://github.com/Neywa-Labs/mlx-audio/pull/1206) (open).
 
 <h1 align="center">MLX-Audio</h1>
 
