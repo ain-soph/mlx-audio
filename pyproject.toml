@@ -91,12 +91,12 @@ llm = [
 
 # Differential tests against the pinned mlx-lm reference.
 parity = [
-    "mlx-lm==0.32.2; python_version >= '3.11'",
+    "mlx-lm>=0.32.2; python_version >= '3.11'",
 ]
 
 # Development dependencies
 dev = [
-    "httpx2>=2.0.0,<3",
+    "httpx2>=2.0.0",
     "pytest>=9.0.3",
     "pytest-asyncio>=1.0.0",
     "black>=26.10.1",
