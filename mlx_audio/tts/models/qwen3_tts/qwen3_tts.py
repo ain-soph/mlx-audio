@@ -309,6 +309,11 @@ class Model(nn.Module):
         ]
         return not any(pattern in path for pattern in skip_patterns)
 
+    def model_load_quant_predicate(self, path: str, module) -> bool:
+        # Restoring a checkpoint: rebuild exactly the layers it stores quantized (apply_quantization then checks
+        # for their .scales), the text / codec embeddings included, so an 8-bit export can quantize them too.
+        return not any(p in path for p in ("speech_tokenizer", "speaker_encoder"))
+
     def extract_speaker_embedding(
         self,
         audio: mx.array,
