@@ -47,6 +47,7 @@ stt = [
 # TTS dependencies
 tts = [
     "mistral-common[audio]",
+    "num2words>=0.5.14",  # CosyVoice3 text frontend
     "pillow>=13.0.0",
 ]
 
