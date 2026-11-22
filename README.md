@@ -1,3 +1,12 @@
+> **ain-soph fork (`serving` branch, based on upstream `main` b973a6c, after v0.6.7).** What differs from upstream:
+>
+> | Change | Why | Enable / default | Effect (M5 Ultra) |
+> |---|---|---|---|
+> | No upper version bounds on runtime dependencies | one shared environment with other engines | — | — |
+> | Qwen3-TTS restores every layer an 8-bit checkpoint stores quantized | an export that also quantizes the text / codec embeddings could not be loaded | always (load time) | existing checkpoints load as before |
+>
+> Full numbers: [Speech in ain-soph/llm-serving](https://github.com/ain-soph/llm-serving/blob/main/docs/performance.md). Upstream PRs: [#1206](https://github.com/Neywa-Labs/mlx-audio/pull/1206) (merged; no longer carried here).
+
 <h1 align="center">MLX-Audio</h1>
 
 [![Every voice task, one engine. Runs locally on your Mac. Install with pip install -U mlx-audio or try it in Nativ.](https://raw.githubusercontent.com/Blaizzy/mlx-audio/70f6291ee79fcfe1a3cbfdde2ea6170bfa91339d/docs/assets/mlx-audio-banner.png)](https://runnativ.ai/)
