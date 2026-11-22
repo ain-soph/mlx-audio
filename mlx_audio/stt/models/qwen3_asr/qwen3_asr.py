@@ -941,7 +941,8 @@ class Qwen3ASRModel(nn.Module):
         When language is None, the model will auto-detect the language
         by outputting 'language {detected}<asr_text>{text}'.
         """
-        system_content = f"{system_prompt}\n" if system_prompt else ""
+        # Official chat_template.json: "<|im_start|>system\n" + context + "<|im_end|>\n" (no newline after context).
+        system_content = system_prompt or ""
 
         if language is not None:
             supported = self.config.support_languages or []
