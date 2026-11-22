@@ -4,8 +4,10 @@
 > |---|---|---|---|
 > | No upper version bounds on runtime dependencies | one shared environment with other engines | — | — |
 > | Qwen3-TTS restores every layer an 8-bit checkpoint stores quantized | an export that also quantizes the text / codec embeddings could not be loaded | always (load time) | existing checkpoints load as before |
+> | Qwen3-ASR / ForcedAligner restore every layer a checkpoint stores quantized; tied `lm_head.*` dropped | an export with a quantized audio tower loaded packed weights into float layers (only a warning) | always (load time) | 8-bit 1.7B + aligner load correctly (MLX peak 4.20 GB vs 4.33 on mlx-qwen3-asr); existing checkpoints load as before |
+> | Qwen3-ASR prompt matches the official chat template when a context is given | one extra newline token after the system context | always | token ids identical to the reference; no-context prompts unchanged |
 >
-> Full numbers: [Speech in ain-soph/llm-serving](https://github.com/ain-soph/llm-serving/blob/main/docs/performance.md). Upstream PRs: [#1206](https://github.com/Neywa-Labs/mlx-audio/pull/1206) (merged; no longer carried here).
+> Full numbers: [Speech in ain-soph/llm-serving](https://github.com/ain-soph/llm-serving/blob/main/docs/performance.md). Upstream PRs: [#1234](https://github.com/Neywa-Labs/mlx-audio/pull/1234) (Qwen3-TTS load, open), [#1206](https://github.com/Neywa-Labs/mlx-audio/pull/1206) (merged; no longer carried here).
 
 <h1 align="center">MLX-Audio</h1>
 
