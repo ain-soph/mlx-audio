@@ -571,6 +571,10 @@ class ForcedAlignerModel(nn.Module):
         """Determine which layers to quantize."""
         return not p.startswith("audio_tower")
 
+    def model_load_quant_predicate(self, p: str, m: nn.Module) -> bool:
+        """Restore exactly the layers a checkpoint stores quantized (see Qwen3-ASR)."""
+        return True
+
     @classmethod
     def post_load_hook(
         cls, model: "ForcedAlignerModel", model_path: Path

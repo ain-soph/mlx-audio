@@ -821,7 +821,9 @@ class Qwen3ASRModel(nn.Module):
             if k.startswith("thinker."):
                 k = k[len("thinker.") :]
 
-            if k == "lm_head.weight":
+            # lm_head is tied to embed_tokens; a quantized export may also carry
+            # lm_head.scales / lm_head.biases, which have no module to load into.
+            if k.startswith("lm_head."):
                 continue
 
             if (
@@ -839,6 +841,15 @@ class Qwen3ASRModel(nn.Module):
     def model_quant_predicate(self, p: str, m: nn.Module) -> bool:
         """Determine which layers to quantize."""
         return not p.startswith("audio_tower")
+
+    def model_load_quant_predicate(self, p: str, m: nn.Module) -> bool:
+        """Restore exactly the layers a checkpoint stores quantized.
+
+        apply_quantization then checks each layer for its ``.scales`` tensor, so
+        exports that also quantized the audio tower load correctly instead of
+        leaving packed weights in float Linear layers.
+        """
+        return True
 
     @classmethod
     def post_load_hook(
